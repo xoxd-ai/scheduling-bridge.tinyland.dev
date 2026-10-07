@@ -27,7 +27,7 @@ Vendor claims on this site always carry a maturity qualifier —
 
 ## Stack
 
-Static SvelteKit, Skeleton 4.15.2 (pinned), Tailwind v4, Bazel + Nix + Just per the
+Static SvelteKit, Skeleton 5.0.1 (pinned), Tailwind v4, Bazel + Nix + Just per the
 Tinyland house scaffold. No runtime database, no auth at the edge. Federated content
 flows in from `tinyland.dev` via signed `PublicPulseSnapshot` JSON (planned).
 

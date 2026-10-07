@@ -3,7 +3,7 @@
 @import '@skeletonlabs/skeleton';
 @import '@skeletonlabs/skeleton-svelte';
 
-/* scheduling-bridge Warm/Pragmatic house theme (Skeleton 4 house format, OKLCH). */
+/* scheduling-bridge Warm/Pragmatic house theme (Skeleton 5 theme contract, OKLCH). */
 @import './lib/styles/themes/scheduling-bridge.css';
 
 /* Self-hosted fonts. Inter for body + heading per scheduling-bridge theme.
@@ -35,8 +35,27 @@
 
 /* Dark-mode strategy: data-mode attribute on <html>, set synchronously by the
    FOUC-prevention script in src/app.html. Color pairs (bg-surface-100-900) use
-   the native light-dark() function which switches via document color-scheme. */
+   the native light-dark() function which switches via document color-scheme.
+   Skeleton 5 writes its own dark rules with Tailwind's `dark` variant and
+   says so in a comment in its globals.css, so re-keying the variant here is
+   what makes every Skeleton dark rule follow this switcher instead of the OS
+   media query. The Skeleton 4 shim that rewrote `@variant dark` to `.dark &`
+   is deleted for the same reason. */
 @custom-variant dark (&:where([data-mode='dark'], [data-mode='dark'] *));
+
+/* Source fence. Tailwind emits a utility for every word-shaped token in every
+   file under the project root that .gitignore does not hide, and Skeleton
+   names its utilities after elements and everyday words (btn, card, chip,
+   checkbox, h1..h6, pre, textarea, and in 5.0.1 also dialog and disclosure
+   surfaces). Each `@source not` below takes a tree no page is templated from
+   out of the scan; paths are relative to this file. node_modules is
+   gitignored, so the Skeleton Svelte component classes are sourced
+   explicitly from the package dist (same fence as xoxd.ai 6d22bb9 and
+   floorcables.com SK3). */
+@source not '../e2e';
+@source not '../scripts';
+@source not '../static';
+@source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
 
 [data-mode='light'] {
 	color-scheme: light;
@@ -46,8 +65,11 @@
 }
 
 /* ===== Body + global typography baseline =====
-   Skeleton 4 themes declare --typo-base/heading--font-family, but app code
-   has to anchor body to that variable so prose actually picks up Inter. */
+   Skeleton 5 reads --typo-base--font-family in its own base-layer body rule,
+   so the declaration below is now a restatement rather than the only thing
+   anchoring prose to Inter. It stays because the rule also carries the
+   font feature settings and overscroll behaviour, which Skeleton has no
+   token for. */
 html {
 	overflow-x: clip;
 	-webkit-font-smoothing: antialiased;

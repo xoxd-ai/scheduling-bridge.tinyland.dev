@@ -10,7 +10,6 @@ Stock module picks (replace per-site as needed):
 
 - tummycrypt_tinyland_color_utils — runtime color leaf (zero deps).
 - tummycrypt_vite_plugin_a11y      — build-time WCAG scan plugin.
-- tummycrypt_vite_plugin_skeleton_colors — Skeleton-4 color generator.
 - tummycrypt_tinyvectors            — animated vector blob backgrounds.
 
 After cloning from this template:
@@ -41,7 +40,6 @@ bazel_dep(name = "aspect_rules_swc", version = "2.6.1")
 # (audit: docs/spec/bazel-catalog-audit-2026-04-29.md)
 bazel_dep(name = "tummycrypt_tinyland_color_utils", version = "0.2.3")
 bazel_dep(name = "tummycrypt_vite_plugin_a11y", version = "0.2.3")
-bazel_dep(name = "tummycrypt_vite_plugin_skeleton_colors", version = "0.2.3")
 bazel_dep(name = "tummycrypt_tinyvectors", version = "0.2.5")
 
 # Node 22.13.1

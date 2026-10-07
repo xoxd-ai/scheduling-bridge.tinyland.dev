@@ -33,7 +33,7 @@ export default ts.config(
 		rules: {
 			'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
 			'@typescript-eslint/no-explicit-any': 'error',
-			// Svelte 5 / Skeleton 4 adjustments
+			// Svelte 5 / Skeleton 5 adjustments
 			'svelte/no-at-html-tags': 'warn',
 			'svelte/no-dom-manipulating': 'off',
 			'svelte/require-each-key': 'error',

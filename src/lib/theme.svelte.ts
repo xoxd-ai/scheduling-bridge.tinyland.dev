@@ -3,7 +3,7 @@ import { browser } from '$app/environment';
 /**
  * Theme store for scheduling-bridge.tinyland.dev.
  *
- * Single Skeleton 4 theme (`scheduling-bridge`); multi-theme later. Color mode
+ * Single Skeleton 5 theme (`scheduling-bridge`); multi-theme later. Color mode
  * (`light` | `dark` | `system`) is the user-tunable axis and is persisted
  * to localStorage under `color-mode`. Theme id is persisted under
  * `skeleton-theme` for forward compatibility with the canonical Skeleton

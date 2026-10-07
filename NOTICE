@@ -63,7 +63,6 @@ production site or used for prerendering. None are copyleft.
   Zlib            @tummycrypt/tinyvectors
                   @tummycrypt/tinyland-color-utils
                   @tummycrypt/vite-plugin-a11y
-                  @tummycrypt/vite-plugin-skeleton-colors
                   (also dual-licensed under LicenseRef-Tinyland-Proprietary
                   for first-party Tinyland usage; this site uses the Zlib
                   arm exclusively.)
