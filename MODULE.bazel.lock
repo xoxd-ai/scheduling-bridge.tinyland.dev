@@ -342,8 +342,6 @@
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_tinyvectors/0.2.5/source.json": "3bcf2d945fb9c755a30e27b3f33281d1ead2a9cb54c18bcbccd6dc1290c24193",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_a11y/0.2.3/MODULE.bazel": "6e4ed248101762c194c9f81c13e8ffac2d0b1265664462931100e0587ea63837",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_a11y/0.2.3/source.json": "901877893faed5d9baf7eb1a8984014d164ab82adbdcdb70c04666889252fa7a",
-    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_skeleton_colors/0.2.3/MODULE.bazel": "24c355833f5768d52e8d455b977a039bb822221c303fee9e0468c8d0e20f635f",
-    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_skeleton_colors/0.2.3/source.json": "396c7f18e254137b90a58d0e76a632ca82935fb2fd2285fae7f74aba31eeb059",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/upb/0.0.0-20220923-a547704/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/yq.bzl/0.1.1/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/yq.bzl/0.3.2/MODULE.bazel": "not found",
@@ -356,7 +354,7 @@
     "@@aspect_rules_js+//npm:extensions.bzl%pnpm": {
       "general": {
         "bzlTransitiveDigest": "8Fn1V6ojA2oD887lYsnqxAWs3gaYzxWM3Wxi0UmA5tI=",
-        "usagesDigest": "etwreUJhXGof4h7zhYVU+RKCnICme2muONZvBHY6xIk=",
+        "usagesDigest": "JZfFmP61WkUZ6pK1p6RCMNvAW4MY2NJoxW/ROuFl3Qw=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -622,7 +620,7 @@
     "@@aspect_rules_ts+//ts:extensions.bzl%ext": {
       "general": {
         "bzlTransitiveDigest": "kpFi+ae3stSvLHgS7Fiwn/tb3J3dDqMOi1EP3tJ/TKY=",
-        "usagesDigest": "LDHQheKlzLsgBFK4jIKHo60qpmwjM5XkHCehGIqfHoM=",
+        "usagesDigest": "f4GaIAy5pzNaTC4daaMe0lJSq1nayCrPpMKTdYJlRnI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -870,7 +868,7 @@
     "@@rules_nodejs+//nodejs:extensions.bzl%node": {
       "general": {
         "bzlTransitiveDigest": "4pUxCNc22K4I+6+4Nxu52Hur12tFRfa1JMsN5mdDv60=",
-        "usagesDigest": "8ns2bK7rAsuBdpCJmRfar3M224MKYGZX3XhgJiyTLog=",
+        "usagesDigest": "psPpRnFA1zf3YtISlzNCS3grmcDHIvKj/xRavaWZtm0=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},

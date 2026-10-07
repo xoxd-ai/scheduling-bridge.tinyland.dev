@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"type": "module",
-	"description": "Brand site for scheduling-bridge — monadic booking middleware for hostile calendar stacks (static SvelteKit, Skeleton 4, Bazel + Nix + Just)",
+	"description": "Brand site for scheduling-bridge — monadic booking middleware for hostile calendar stacks (static SvelteKit, Skeleton 5, Bazel + Nix + Just)",
 	"homepage": "https://github.com/tinyland-inc/scheduling-bridge.tinyland.dev",
 	"repository": {
 		"type": "git",
@@ -33,18 +33,17 @@
 		"@lucide/svelte": "^1.23.0",
 		"@tummycrypt/tinyland-color-utils": "0.2.3",
 		"@tummycrypt/tinyvectors": "0.3.0",
-		"effect": "^3.21.4"
+		"effect": "4.0.1"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.61.1",
-		"@skeletonlabs/skeleton": "4.15.2",
-		"@skeletonlabs/skeleton-svelte": "4.15.2",
+		"@skeletonlabs/skeleton": "5.0.1",
+		"@skeletonlabs/skeleton-svelte": "5.0.1",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.69.2",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
 		"@tailwindcss/vite": "^4.3.2",
 		"@tummycrypt/vite-plugin-a11y": "0.2.2",
-		"@tummycrypt/vite-plugin-skeleton-colors": "0.2.2",
 		"@types/node": "^22.20.1",
 		"@vitest/coverage-v8": "^4.1.10",
 		"eslint": "^9.39.2",

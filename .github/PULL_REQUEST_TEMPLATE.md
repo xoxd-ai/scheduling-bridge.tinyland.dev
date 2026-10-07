@@ -16,7 +16,7 @@
 - [ ] `just build` produces `build/` cleanly
 - [ ] `just test` passes (unit + e2e if applicable)
 - [ ] No new gitleaks findings
-- [ ] Skeleton `4.15.2` exact pin preserved (no v5 or prerelease drift)
+- [ ] Skeleton `5.0.1` exact pin preserved (no prerelease drift)
 - [ ] `bazel mod graph` smoke green (registry chain resolves)
 
 ## Screenshots / Output

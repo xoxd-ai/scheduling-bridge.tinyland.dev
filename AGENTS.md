@@ -31,9 +31,16 @@ gRPC / signed JSON snapshots from `tinyland.dev`.
 
 ## Theme & Skeleton
 
-- **Skeleton 4.15.2** (pinned). Do not upgrade casually.
-- Tailwind v4 + the `skeletonTailwindV4Compat()` shim plugin in `vite.config.ts`
-  rewrites `@variant` / `@apply variant-` to stable equivalents. Do not remove.
+- **Skeleton 5.0.1** (pinned exact, both `@skeletonlabs/skeleton` and
+  `@skeletonlabs/skeleton-svelte`; estate ruling RP1, TIN-5694). Do not
+  downgrade, range-pin, or take a prerelease.
+- Tailwind v4 with no compatibility shim. The Skeleton 4 era
+  `skeletonTailwindV4Compat()` plugin and `@tummycrypt/vite-plugin-skeleton-colors`
+  (npm dep and `bazel_dep`) are deleted and stay deleted: Skeleton 5 emits
+  `@variant` on purpose and declares every colour-pair token itself.
+- The theme's root background uses the Skeleton 5 names
+  `--color-root-bg-light` / `--color-root-bg-dark`. `src/app.css` carries the
+  `@source` fences (non-page trees out; skeleton-svelte dist in).
 - Theme cascade lives in `src/app.css`. Per-site brand themes go under
   `src/lib/styles/themes/`.
 

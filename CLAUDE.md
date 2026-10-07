@@ -9,7 +9,8 @@ Quick reminders:
   directly unless extending the Justfile.
 - Sites are static. No runtime DB, no auth at the edge — federate via
   `tinyland.dev` snapshots.
-- Skeleton 4.15.2 pinned exact. Tailwind v4 with `skeletonTailwindV4Compat()`
-  shim. Do not unpin.
+- Skeleton 5.0.1 pinned exact (RP1, TIN-5694). Tailwind v4 with no
+  compatibility shim; the Skeleton 4 `skeletonTailwindV4Compat()` plugin and
+  `@tummycrypt/vite-plugin-skeleton-colors` are deleted and stay deleted.
 - Bazel registry: `tinyland-inc/bazel-registry` first, then BCR.
 - See parent: https://github.com/tinyland-inc/scheduling-bridge.tinyland.dev

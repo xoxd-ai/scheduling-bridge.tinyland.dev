@@ -87,9 +87,12 @@
 	--typo-anchor--focus--text-underline-offset: auto;
 	--typo-anchor--focus--text-underline-position: auto;
 
-	/* Body backgrounds */
-	--body-background-color: var(--color-surface-50);
-	--body-background-color-dark: var(--color-surface-950);
+	/* Root background. Skeleton 5 paints <html> from --color-root-bg-light and
+	   --color-root-bg-dark; the Skeleton 4 names for the same two slots were
+	   --body-background-color and --body-background-color-dark. Names only:
+	   both values are the same surface shades this theme already declared. */
+	--color-root-bg-light: var(--color-surface-50);
+	--color-root-bg-dark: var(--color-surface-950);
 
 	/* Brand */
 	--color-brand-light: var(--color-primary-500);

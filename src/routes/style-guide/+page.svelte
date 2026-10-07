@@ -4,10 +4,10 @@
 	 *
 	 * Gated behind `?guide=1` so it never appears in production navigation
 	 * or via accidental crawl. Renders every theme color scale × shade,
-	 * representative color-pair utility classes (verifies the
-	 * `@tummycrypt/vite-plugin-skeleton-colors` pipeline still synthesises
-	 * pair classes under the scheduling-bridge theme), typography hierarchy, every
-	 * Skeleton 4 component required for M2 (AppBar, Avatar, Tabs, Tooltip,
+	 * representative color-pair utility classes (verifies Skeleton 5's own
+	 * `@theme inline` pair tokens resolve under the scheduling-bridge theme),
+	 * typography hierarchy, every
+	 * Skeleton 5 component required for M2 (AppBar, Avatar, Tabs, Tooltip,
 	 * Switch, Toast, Popover, Dialog), and a side-by-side light/dark
 	 * comparison region scoped via `data-mode` attributes (does NOT mutate
 	 * the page-wide theme).
@@ -306,7 +306,7 @@
 			<p class="text-surface-600-400 font-mono text-xs uppercase tracking-wide">M2.5 · TIN-779</p>
 			<h1 class="mt-1 text-4xl font-bold tracking-tight">Style guide</h1>
 			<p class="text-surface-700-300 mt-3 max-w-prose">
-				Smoke test for theme scales, typography, and Skeleton 4 components under the
+				Smoke test for theme scales, typography, and Skeleton 5 components under the
 				<code class="bg-surface-100-900 rounded px-1">scheduling-bridge</code> house theme. Not part of production navigation.
 			</p>
 		</header>
@@ -342,8 +342,8 @@
 		<section aria-labelledby="pairs-heading" class="flex flex-col gap-4">
 			<h2 id="pairs-heading" class="text-2xl font-bold">Color-pair utilities</h2>
 			<p class="text-surface-700-300 max-w-prose">
-				Verifies the <code class="bg-surface-100-900 rounded px-1">@tummycrypt/vite-plugin-skeleton-colors</code>
-				pipeline emits pair utilities (<code class="bg-surface-100-900 rounded px-1">bg</code>,
+				Verifies that Skeleton 5's own <code class="bg-surface-100-900 rounded px-1">@theme inline</code>
+				pair tokens emit pair utilities (<code class="bg-surface-100-900 rounded px-1">bg</code>,
 				<code class="bg-surface-100-900 rounded px-1">text</code>,
 				<code class="bg-surface-100-900 rounded px-1">border</code>,
 				<code class="bg-surface-100-900 rounded px-1">ring</code>) for the scheduling-bridge theme.
@@ -379,7 +379,7 @@ const booking = await bridge.schedule({ vendor: "acuity", slot });
 console.log(booking.confirmationId);`}</code
 					></pre>
 				<blockquote class="border-primary-500-400 my-4 border-l-4 pl-4 italic">
-					Blockquote — Skeleton 4 typography tokens drive bordered quotes.
+					Blockquote — Skeleton 5 typography tokens drive bordered quotes.
 				</blockquote>
 				<ul class="my-4 list-disc pl-6">
 					<li>Unordered list item one</li>
@@ -394,9 +394,9 @@ console.log(booking.confirmationId);`}</code
 			</div>
 		</section>
 
-		<!-- ============== SKELETON 4 COMPONENTS ============== -->
+		<!-- ============== SKELETON 5 COMPONENTS ============== -->
 		<section aria-labelledby="components-heading" class="flex flex-col gap-6">
-			<h2 id="components-heading" class="text-2xl font-bold">Skeleton 4 components</h2>
+			<h2 id="components-heading" class="text-2xl font-bold">Skeleton 5 components</h2>
 
 			<div class="border-surface-200-800 flex flex-col gap-2 rounded border p-4">
 				<h3 class="font-mono text-sm uppercase">AppBar (mini)</h3>
