@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { Menu, X } from '@lucide/svelte';
 	import { AppBar, Dialog, Navigation } from '@skeletonlabs/skeleton-svelte';
 	import { TinyVectors } from '@tummycrypt/tinyvectors';
 	import '../app.css';
-	import { theme } from '$lib/theme.svelte';
-	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+	import { theme } from '#lib/theme.svelte.js';
+	import ThemeSwitcher from '#lib/components/ThemeSwitcher.svelte';
 
 	let { children } = $props();
 

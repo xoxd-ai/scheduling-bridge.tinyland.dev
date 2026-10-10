@@ -17,6 +17,17 @@ updates:
       - dependency-name: '@types/node'
         update-types:
           - 'version-update:semver-major'
+      # Framework and test-runner majors move with the estate (RU5), not per
+      # spoke; the exact pins follow site.scaffold's estate manifest.
+      - dependency-name: '@sveltejs/*'
+        update-types:
+          - 'version-update:semver-major'
+      - dependency-name: 'vitest'
+        update-types:
+          - 'version-update:semver-major'
+      - dependency-name: '@vitest/*'
+        update-types:
+          - 'version-update:semver-major'
     groups:
       minor-and-patch:
         update-types:

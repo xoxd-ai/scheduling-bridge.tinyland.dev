@@ -65,8 +65,10 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
+      # Routed through the Justfile so local and CI carry the identical flags
+      # (`just bazel-graph` passes --lockfile_mode=error).
       - name: Resolve Bazel module graph
-        run: nix develop --command bazelisk mod graph
+        run: nix develop --command just bazel-graph
 
-      - name: Build npm link tree
-        run: nix develop --command bazelisk build //:node_modules
+      - name: Build npm link tree and in-house links
+        run: nix develop --command just bazel-node-modules

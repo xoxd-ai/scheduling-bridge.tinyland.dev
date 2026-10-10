@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Thin wrapper around build-time Shiki output. The `html` prop is
 	// pre-highlighted at prerender time via
-	// `$lib/content/highlight`. No client-side Shiki runtime.
+	// `#lib/content/highlight.js`. No client-side Shiki runtime.
 	let { html, lang, caption }: { html: string; lang?: string; caption?: string } = $props();
 </script>
 

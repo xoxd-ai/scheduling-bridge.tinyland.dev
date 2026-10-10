@@ -17,10 +17,20 @@ _default:
 # Development
 # ─────────────────────────────────────────────
 
-# Install dependencies (frozen lockfile)
+# Install dependencies (frozen lockfile), then link the in-house packages.
+# They are Bazel-carried (ruling RU9): package.json and pnpm-lock.yaml carry
+# none of them, the root BUILD.bazel links each registry module with
+# npm_link_package, and `inhouse-link` materialises those links into
+# node_modules after pnpm has finished. pnpm never asks npmjs for them.
 setup:
     cd {{ root }} && pnpm install --frozen-lockfile
+    just inhouse-link
     @echo "Setup complete. Run 'just dev' to start."
+
+# Build the root npm_link_package targets for the in-house registry modules
+# and materialise each into node_modules/<pkg> (run after pnpm install).
+inhouse-link:
+    cd {{ root }} && node scripts/inhouse-link.mjs
 
 # Start the Vite dev server
 dev:
@@ -61,7 +71,8 @@ clean-all: clean
 # Validation
 # ─────────────────────────────────────────────
 
-# svelte-check + tsc (delegates to package.json `check`)
+# svelte-kit sync + svelte-check --tsgo, i.e. TypeScript 7.0.2 (RU13;
+# delegates to package.json `check`)
 typecheck:
     cd {{ root }} && pnpm run check
 
@@ -88,8 +99,8 @@ test-e2e:
 # Run all tests (unit + e2e)
 test: test-unit test-e2e
 
-# Run lint + typecheck + unit (pre-commit gate)
-check: lint typecheck test-unit
+# Run lint + typecheck + unit + the in-house pin parity check (pre-commit gate)
+check: lint typecheck test-unit bazel-pin-parity
     @echo "All checks passed."
 
 # Run full CI pipeline locally
@@ -112,9 +123,26 @@ sync:
 analyze:
     cd {{ root }} && BUILD_ANALYZE=true pnpm run build
 
-# Bazel mod graph smoke (registry-resolution proof)
+# Bazel mod graph smoke (registry-resolution proof, refuses a stale lock).
+# --lockfile_mode=error is load bearing: Bazel's default `update` mode
+# rewrites MODULE.bazel.lock in place and then reports success.
 bazel-graph:
-    cd {{ root }} && bazelisk mod graph
+    cd {{ root }} && bazelisk mod graph --lockfile_mode=error
+
+# Regenerate MODULE.bazel.lock from MODULE.bazel (commit the result)
+bazel-lock:
+    cd {{ root }} && bazelisk mod deps --lockfile_mode=update
+
+# Build the npm link tree and the in-house links (the other half of the CI
+# Bazel smoke).
+bazel-node-modules:
+    cd {{ root }} && bazelisk build //:node_modules //:inhouse_packages
+
+# Assert the in-house packages are Bazel-only: each bazel_dep pairs with one
+# root npm_link_package, package.json and pnpm-lock.yaml carry none of them,
+# and the materialised node_modules copy is the pinned version. Pure node.
+bazel-pin-parity:
+    cd {{ root }} && node scripts/check-bazel-npm-pin-parity.mjs
 
 # Generate changelog (git-cliff)
 changelog:
@@ -135,7 +163,7 @@ install-hooks:
 # Show environment info
 info:
     @echo "Site:    scheduling-bridge.tinyland.dev"
-    @echo "Repo:    tinyland-inc/scheduling-bridge.tinyland.dev"
+    @echo "Repo:    xoxd-ai/scheduling-bridge.tinyland.dev"
     @echo "Node:    $(node --version 2>/dev/null || echo 'not available')"
     @echo "pnpm:    $(pnpm --version 2>/dev/null || echo 'not available')"
     @echo "Just:    $(just --version 2>/dev/null || echo 'not available')"
@@ -144,4 +172,4 @@ info:
 
 # View the GitHub repo (opens in browser)
 gh-repo:
-    gh repo view tinyland-inc/scheduling-bridge.tinyland.dev --web
+    gh repo view xoxd-ai/scheduling-bridge.tinyland.dev --web

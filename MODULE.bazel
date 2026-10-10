@@ -1,21 +1,18 @@
 """
 scheduling-bridge.tinyland.dev - Bazel Module Configuration
 
-Static-first SvelteKit consumer of the @tummycrypt/* npm packages
-produced by tinyland-inc/bazel-registry. The canonical site build is
-`pnpm run build`; Bazel exists for module-graph integrity proofs and
-is exercised via `bazel mod graph` smoke in CI.
+Static SvelteKit brand site. The canonical site build is `pnpm run build`
+(`just build`); Bazel is the only carrier for the in-house packages
+(ruling RU9): the root BUILD.bazel links each registry module's npm
+package with npm_link_package, and `just inhouse-link` materialises those
+links into node_modules for pnpm/Vite. `bazel mod graph` and the link
+tree are the CI smoke.
 
-Stock module picks (replace per-site as needed):
+In-house modules (xoxd-ai/bazel-registry):
 
-- tummycrypt_tinyland_color_utils — runtime color leaf (zero deps).
+- tummycrypt_tinyland_color_utils — color/contrast types (zero deps).
 - tummycrypt_vite_plugin_a11y      — build-time WCAG scan plugin.
-- tummycrypt_tinyvectors            — animated vector blob backgrounds.
-
-After cloning from this template:
-  1. Update `module(name = ...)` to your_site_underscored.
-  2. Run `scripts/rebrand.sh <site.example.com>` to sed brand strings.
-  3. `bazelisk mod graph` should succeed before first commit.
+- tummycrypt_tinyvectors            — animated vector blob background.
 """
 
 module(
@@ -33,18 +30,23 @@ bazel_dep(name = "rules_pkg", version = "1.1.0")
 # JS/TS toolchain (Aspect)
 bazel_dep(name = "rules_nodejs", version = "6.7.3")
 bazel_dep(name = "aspect_rules_js", version = "2.9.1")
-bazel_dep(name = "aspect_rules_ts", version = "3.8.4")
+bazel_dep(name = "aspect_rules_ts", version = "3.10.1")
 bazel_dep(name = "aspect_rules_swc", version = "2.6.1")
 
-# Tinyland building-block deps via tinyland-inc/bazel-registry
-# (audit: docs/spec/bazel-catalog-audit-2026-04-29.md)
+# In-house packages via xoxd-ai/bazel-registry, at the newest registered
+# versions (ruling RU9). These pins are the versions the site ships: the root
+# BUILD.bazel links each npm package from its module with npm_link_package,
+# and `just inhouse-link` materialises those links into node_modules for
+# pnpm/Vite. package.json and pnpm-lock.yaml carry none of them;
+# scripts/check-bazel-npm-pin-parity.mjs is the gate. After a bump run
+# `just bazel-lock`, `just setup`, then `just bazel-pin-parity`.
 bazel_dep(name = "tummycrypt_tinyland_color_utils", version = "0.2.3")
-bazel_dep(name = "tummycrypt_vite_plugin_a11y", version = "0.2.3")
-bazel_dep(name = "tummycrypt_tinyvectors", version = "0.2.5")
+bazel_dep(name = "tummycrypt_vite_plugin_a11y", version = "0.3.0")
+bazel_dep(name = "tummycrypt_tinyvectors", version = "0.3.7")
 
-# Node 22.13.1
+# Node 22.22.0 (SvelteKit 3 needs >= 22.17)
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
-node.toolchain(node_version = "22.13.1")
+node.toolchain(node_version = "22.22.0")
 
 # pnpm 10.13.1
 pnpm = use_extension("@aspect_rules_js//npm:extensions.bzl", "pnpm")
@@ -63,16 +65,26 @@ npm.npm_translate_lock(
     npmrc = "//:.npmrc",
     pnpm_lock = "//:pnpm-lock.yaml",
     data = [
+        "//:.pnpmfile.cjs",
         "//:package.json",
+        "//:patches/@sveltejs__kit@3.0.1.patch",
+        "//:patches/devalue@5.9.4.patch",
+        "//:patches/svelte-check@4.7.6.patch",
         "//:pnpm-workspace.yaml",
     ],
 )
 use_repo(npm, "npm")
 
-# TypeScript 5.9.3 (rules_ts cannot parse caret ranges — exact required)
-rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext")
-rules_ts_ext.deps(ts_version = "5.9.3")
-use_repo(rules_ts_ext, "npm_typescript")
+# TypeScript 7.0.2 is the `typescript` package (ruling RU13). rules_ts lists
+# it among its native TypeScript versions from 3.9.0, so no integrity is
+# needed. The TypeScript 6 compiler API that SvelteKit, svelte-check and
+# typescript-eslint still call comes from @typescript/typescript6 (see
+# patches/README.md); this site has no ts_project target today. rules_ts
+# 3.10 deprecates the `ext` extension and its `ts_version` attribute in favour
+# of the `typescript` extension with `version` (same wiring as site.scaffold).
+typescript = use_extension("@aspect_rules_ts//ts:extensions.bzl", "typescript")
+typescript.deps(version = "7.0.2")
+use_repo(typescript, "npm_typescript")
 
 # SWC for any future ts_project targets
 swc = use_extension("@aspect_rules_swc//swc:extensions.bzl", "swc")

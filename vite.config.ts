@@ -1,4 +1,6 @@
+import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
 import { accessibilityPlugin } from '@tummycrypt/vite-plugin-a11y';
 import { defineConfig } from 'vite';
@@ -22,13 +24,38 @@ import { defineConfig } from 'vite';
 //   @skeletonlabs/skeleton/src/base/theme.css, so the plugin contributed no
 //   CSS while scanning every component on every build.
 export default defineConfig({
+	// Bazel convenience symlinks (bazel-bin, bazel-out, ...) are not sources.
+	server: { watch: { ignored: ['**/bazel-*', '**/bazel-*/**'] } },
 	plugins: [
 		tailwindcss(),
 		accessibilityPlugin({
 			wcagLevel: 'AA',
 			failOnError: false,
 		}),
-		sveltekit(),
+		// SvelteKit 3 reads its configuration from the sveltekit() plugin;
+		// svelte.config.js is no longer supported. Static site: adapter-static,
+		// prerendered everywhere (src/routes/+layout.ts), no server, no forms.
+		sveltekit({
+			extensions: ['.svelte'],
+			preprocess: [vitePreprocess()],
+			compilerOptions: {
+				runes: true,
+			},
+			adapter: adapter({
+				pages: 'build',
+				assets: 'build',
+				fallback: '404.html',
+				precompress: true,
+				strict: false,
+			}),
+			paths: {
+				base: '',
+			},
+			prerender: {
+				handleHttpError: 'warn',
+				handleMissingId: 'warn',
+			},
+		}),
 	],
 	build: {
 		reportCompressedSize: true,
