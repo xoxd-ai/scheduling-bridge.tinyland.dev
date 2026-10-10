@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { theme, type ColorMode } from '$lib/theme.svelte';
+	import { theme, type ColorMode } from '#lib/theme.svelte.js';
 
 	let isOpen = $state(false);
 

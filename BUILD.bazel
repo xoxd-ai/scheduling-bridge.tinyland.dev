@@ -1,17 +1,51 @@
 """
 Root BUILD.bazel for scheduling-bridge.tinyland.dev.
 
-Minimal: just create the @npm//... node_modules tree. The SvelteKit
-static site is built by `pnpm run build` (vite build) — Bazel does not
-produce build/.
+Creates the @npm//... node_modules tree and links the in-house packages
+straight from their xoxd-ai/bazel-registry modules (ruling RU9; the
+site.scaffold / xoxd.ai pattern). The SvelteKit static site is built by
+`pnpm run build` (vite build); `just inhouse-link` materialises these Bazel
+links into node_modules for that loop. Bazel does not produce build/.
 """
 
+load("@aspect_rules_js//npm:defs.bzl", "npm_link_package")
 load("@npm//:defs.bzl", "npm_link_all_packages")
 
 npm_link_all_packages(name = "node_modules")
 
+# In-house packages: each is a bazel_dep in MODULE.bazel, linked here from the
+# module's `:pkg` target, and absent from package.json and pnpm-lock.yaml.
+# `just bazel-pin-parity` asserts the bazel_dep and link pair up one to one.
+npm_link_package(
+    name = "node_modules/@tummycrypt/tinyland-color-utils",
+    src = "@tummycrypt_tinyland_color_utils//:pkg",
+)
+
+npm_link_package(
+    name = "node_modules/@tummycrypt/tinyvectors",
+    src = "@tummycrypt_tinyvectors//:pkg",
+)
+
+npm_link_package(
+    name = "node_modules/@tummycrypt/vite-plugin-a11y",
+    src = "@tummycrypt_vite_plugin_a11y//:pkg",
+)
+
+INHOUSE_PACKAGES = [
+    ":node_modules/@tummycrypt/tinyland-color-utils",
+    ":node_modules/@tummycrypt/tinyvectors",
+    ":node_modules/@tummycrypt/vite-plugin-a11y",
+]
+
+filegroup(
+    name = "inhouse_packages",
+    srcs = INHOUSE_PACKAGES,
+    visibility = ["//visibility:public"],
+)
+
 exports_files(
     [
+        ".pnpmfile.cjs",
         "package.json",
         "pnpm-lock.yaml",
         "pnpm-workspace.yaml",

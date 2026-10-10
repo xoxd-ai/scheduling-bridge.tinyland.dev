@@ -1,12 +1,15 @@
 # scheduling-bridge.tinyland.dev Bazel Configuration
 #
-# Bazel 8 + Bzlmod. Mirrors elders.tinyland.dev's two-registry chain:
-# tinyland-inc/bazel-registry first, then BCR. Site build remains
-# `pnpm run build`; Bazel exists for module-graph integrity proofs.
+# Bazel 8 + Bzlmod. Two-registry chain: xoxd-ai/bazel-registry first (pinned
+# to an immutable commit, as in xoxd.ai), then BCR. Site build remains
+# `pnpm run build`; Bazel is the only carrier for the in-house packages
+# (ruling RU9, see BUILD.bazel) and the module-graph integrity proof.
 
 common --enable_bzlmod
-common --registry=https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/
+common --registry=https://raw.githubusercontent.com/xoxd-ai/bazel-registry/140da48578c43f55eb6fd88433ff43d5aa32edb7
 common --registry=https://bcr.bazel.build
+common --experimental_repository_downloader_retries=5
+common --http_timeout_scaling=2.0
 
 # Build performance
 build --jobs=auto

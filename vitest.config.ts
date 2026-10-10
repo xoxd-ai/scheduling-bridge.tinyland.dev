@@ -1,15 +1,8 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
+// SvelteKit 3 removed the $lib alias; src/ imports #lib/* through the
+// package.json "imports" field, which Vite and Node resolve natively.
 export default defineConfig({
-	resolve: {
-		alias: {
-			$lib: path.resolve(__dirname, 'src/lib'),
-		},
-	},
 	test: {
 		include: ['src/**/*.test.ts', 'src/**/*.test.svelte.ts', 'scripts/**/*.test.mts'],
 		environment: 'node',

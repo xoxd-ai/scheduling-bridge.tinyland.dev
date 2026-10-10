@@ -46,6 +46,8 @@ bazel-out/
 bazel-testlogs/
 bazel-site.scaffold/
 .cache/bazel-*
+# Local Bazel overrides (try-imported by .bazelrc)
+user.bazelrc
 
 # AI/LLM tooling (CLAUDE.md and AGENTS.md are tracked house contracts)
 .claude/

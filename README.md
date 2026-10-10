@@ -27,8 +27,10 @@ Vendor claims on this site always carry a maturity qualifier —
 
 ## Stack
 
-Static SvelteKit, Skeleton 5.0.1 (pinned), Tailwind v4, Bazel + Nix + Just per the
-Tinyland house scaffold. No runtime database, no auth at the edge. Federated content
+Static SvelteKit 3.0.1, Svelte 5.57.2, Vite 8.3.3, TypeScript 7.0.2 (`svelte-check
+--tsgo`), Effect 4.0.2, Skeleton 5.0.1, Tailwind v4, Bazel + Nix + Just per the
+Tinyland house scaffold (all exact pins; see AGENTS.md). The in-house packages
+(`@tummycrypt/*`) come only from Bazel modules; `just setup` links them. No runtime database, no auth at the edge. Federated content
 flows in from `tinyland.dev` via signed `PublicPulseSnapshot` JSON (planned).
 
 ## Quick start

@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const port = 3000;
+// PLAYWRIGHT_PORT lets a shared host run the suite on a private port.
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 3000);
 const baseURL = `http://localhost:${port}`;
 
 export default defineConfig({
