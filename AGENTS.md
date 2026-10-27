@@ -56,7 +56,9 @@ gRPC / signed JSON snapshots from `tinyland.dev`.
 - Registry order: `xoxd-ai/bazel-registry` pinned to an immutable commit in
   `.bazelrc`, then BCR. After a module bump: `just bazel-lock`, `just setup`,
   `just bazel-pin-parity`.
-- RBE profile: `--config=flywheel` (only from runners with cluster reachability).
+- Local and bounded (TIN-5770): no flywheel lane is enrolled and there is no
+  remote profile, so Bazel recipes print "local, non-qualifying". The server
+  exits after 120 s idle (`.bazelrc`); `mod` recipes run with `--batch`.
 - Smoke: `just bazel-graph` (`--lockfile_mode=error`) and
   `just bazel-node-modules` run in CI.
 

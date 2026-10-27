@@ -11,6 +11,10 @@ common --registry=https://bcr.bazel.build
 common --experimental_repository_downloader_retries=5
 common --http_timeout_scaling=2.0
 
+# Bound the Bazel server (TIN-5770 R470): a server left by `just setup` or a
+# build exits after 120 s idle, not the 3 h default.
+startup --max_idle_secs=120
+
 # Build performance
 build --jobs=auto
 build --worker_sandboxing
@@ -18,11 +22,11 @@ build --disk_cache=~/.cache/bazel-scheduling-bridge
 build --keep_going
 build --show_timestamps
 
-# Private GloriousFlywheel cache profile.
-# Opt in only from runners that can reach the in-cluster cache service.
-common:flywheel --remote_cache=grpc://bazel-cache.nix-cache.svc.cluster.local:9092
-common:flywheel --remote_upload_local_results=true
-common:flywheel --remote_local_fallback
+# No remote profile. This site is not enrolled in a flywheel lane, so every
+# Bazel run is local and non-qualifying (TIN-5770 R471). The retired in-cluster
+# cache profile is gone. Enroll through a consumer-owned overlay, never a
+# hand-written endpoint, and never fall back from remote to local execution.
+build --remote_local_fallback=false
 
 # rules_ts: skip lib check is required for SvelteKit-style declaration files.
 build --@aspect_rules_ts//ts:skipLibCheck=always

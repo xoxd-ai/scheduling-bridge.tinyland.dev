@@ -9,6 +9,12 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 
 root := justfile_directory()
 
+# Bazel recipes run on this machine: no flywheel lane is enrolled, so their
+# results are local, non-qualifying (TIN-5770 R471). The server exits after
+# 120 s idle (.bazelrc). One-shot `mod` calls use --batch and leave no server
+# (R472).
+bazel_note := "bazel: local, non-qualifying (no flywheel lane enrolled)"
+
 # List available commands
 _default:
     @just --list --unsorted
@@ -30,6 +36,7 @@ setup:
 # Build the root npm_link_package targets for the in-house registry modules
 # and materialise each into node_modules/<pkg> (run after pnpm install).
 inhouse-link:
+    @echo "{{ bazel_note }}" >&2
     cd {{ root }} && node scripts/inhouse-link.mjs
 
 # Start the Vite dev server
@@ -127,15 +134,18 @@ analyze:
 # --lockfile_mode=error is load bearing: Bazel's default `update` mode
 # rewrites MODULE.bazel.lock in place and then reports success.
 bazel-graph:
-    cd {{ root }} && bazelisk mod graph --lockfile_mode=error
+    @echo "{{ bazel_note }}" >&2
+    cd {{ root }} && bazelisk --batch mod graph --lockfile_mode=error
 
 # Regenerate MODULE.bazel.lock from MODULE.bazel (commit the result)
 bazel-lock:
-    cd {{ root }} && bazelisk mod deps --lockfile_mode=update
+    @echo "{{ bazel_note }}" >&2
+    cd {{ root }} && bazelisk --batch mod deps --lockfile_mode=update
 
 # Build the npm link tree and the in-house links (the other half of the CI
 # Bazel smoke).
 bazel-node-modules:
+    @echo "{{ bazel_note }}" >&2
     cd {{ root }} && bazelisk build //:node_modules //:inhouse_packages
 
 # Assert the in-house packages are Bazel-only: each bazel_dep pairs with one
