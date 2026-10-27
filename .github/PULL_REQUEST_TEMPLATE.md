@@ -17,7 +17,7 @@
 - [ ] `just test` passes (unit + e2e if applicable)
 - [ ] No new gitleaks findings
 - [ ] Skeleton `5.0.1` exact pin preserved (no prerelease drift)
-- [ ] `bazel mod graph` smoke green (registry chain resolves)
+- [ ] `bazel-graph` CI job green (registry chain resolves)
 
 ## Screenshots / Output
 
